@@ -1,13 +1,15 @@
 # WordPress Security Scanner
 
-A Dockerized Python script to audit WordPress sites for vulnerabilities in plugins/themes and enumerate users.
+A comprehensive Dockerized Python script to audit WordPress sites for vulnerabilities, enumerate users, scan ports, and crawl multiple pages.
 
 ## Features
 
-- **Initial Scan**: Extracts plugins and themes from the homepage using BeautifulSoup.
-- **User Enumeration**: Fetches users via WordPress REST API.
-- **Vulnerability Check**: Queries WPScan API for known vulnerabilities.
-- **Reporting**: Outputs findings to console.
+- **Multi-page Crawling**: Uses Scrapy to crawl and scan multiple pages for plugins/themes
+- **User Enumeration**: Fetches users via WordPress REST API
+- **Vulnerability Checks**: Queries WPScan API for known vulnerabilities
+- **Port Scanning**: Uses nmap to scan server ports
+- **Configurable**: YAML config files and CLI flags
+- **Multiple Output Formats**: JSON and text reports
 
 ## Prerequisites
 
@@ -16,31 +18,51 @@ A Dockerized Python script to audit WordPress sites for vulnerabilities in plugi
 
 ## Usage
 
-### Using Docker directly
+### Using Docker Compose (Recommended)
 
-1. Build the Docker image:
-   ```bash
-   docker build -t wp-scanner .
-   ```
-
-2. Run the scanner:
-   ```bash
-   docker run --rm -e WPSCAN_API_KEY=your_api_key_here wp-scanner https://example.com
-   ```
-
-### Using Docker Compose (recommended)
-
-1. Set your WPScan API key in an environment variable (optional):
+1. Set your WPScan API key in an environment variable or config:
    ```bash
    export WPSCAN_API_KEY=your_api_key_here
    ```
 
-2. Run the scanner as a one-off process:
+2. Run the scanner:
    ```bash
-   docker compose run --rm scanner https://example.com
+   docker compose run --rm scanner --url https://example.com --crawl --port-scan
    ```
 
-   Replace `https://example.com` with the target WordPress site URL.
+### Using Docker Directly
+
+```bash
+docker run --rm -e WPSCAN_API_KEY=your_api_key_here wp-scanner --url https://example.com --crawl --max-pages 20
+```
+
+### Using Config File
+
+Create a `config.yaml` file (see `config.yaml` for example), then:
+
+```bash
+docker compose run --rm scanner --config config.yaml
+```
+
+## CLI Options
+
+- `--url`: Target WordPress URL (required)
+- `--config`: YAML config file
+- `--api-key`: WPScan API key
+- `--crawl`: Enable multi-page crawling
+- `--max-pages`: Max pages to crawl (default: 10)
+- `--port-scan`: Enable port scanning
+- `--ports`: Ports to scan (default: 80, 443, 3306, 22)
+- `--output`: Output file
+- `--format`: Output format (json/text, default: text)
+
+## Libraries Used
+
+- **requests**: HTTP requests and API interactions
+- **beautifulsoup4**: HTML parsing for plugin/theme extraction
+- **scrapy**: Web crawling for multi-page scanning
+- **python-nmap**: Port scanning
+- **pyyaml**: Configuration file parsing
 
    If you don't have an API key, omit the `-e WPSCAN_API_KEY` part. Vulnerability checks will be skipped.
 
