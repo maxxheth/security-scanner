@@ -64,6 +64,14 @@ docker compose run --rm scanner --config config.yaml
 - **python-nmap**: Port scanning
 - **pyyaml**: Configuration file parsing
 
+## Advanced Features
+
+- **Multi-page Crawling**: Uses Scrapy to crawl and extract plugins/themes from multiple pages
+- **Port Scanning**: Nmap integration for server reconnaissance
+- **Configurable Scanning**: YAML configs and extensive CLI options
+- **Multiple APIs**: Support for WPScan and potential expansion to Patchstack
+- **Output Formats**: JSON and text reports with file export
+
    If you don't have an API key, omit the `-e WPSCAN_API_KEY` part. Vulnerability checks will be skipped.
 
 ## Output
