@@ -1,0 +1,24 @@
+# WordPress Security Scanner Configuration
+
+# Target URL
+url: https://example.com
+
+# WPScan API Key
+wpscan_api_key: your_api_key_here
+
+# Scanning options
+scan_options:
+  crawl: true
+  max_pages: 10
+  port_scan: true
+  ports: [80, 443, 3306, 22]
+
+# Vulnerability databases
+vulnerability_apis:
+  - wpscan
+  - patchstack
+
+# Output options
+output:
+  format: json
+  file: report.json
