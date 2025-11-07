@@ -1,2 +1,5 @@
 requests
 beautifulsoup4
+scrapy
+python-nmap
+pyyaml
