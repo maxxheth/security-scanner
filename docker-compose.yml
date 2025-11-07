@@ -1,0 +1,7 @@
+services:
+  scanner:
+    build: .
+    environment:
+      - WPSCAN_API_KEY=${WPSCAN_API_KEY}
+    stdin_open: true
+    tty: true
